@@ -6,17 +6,11 @@ import javafx.scene.paint.Color;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static nilies.JavaFX.randomColor;
-
 
 public class BracketedLSystemInterpreter {
 
-
     public Double angleStep = 25.7;
     public Double distance = 5.0;
-
-
-
 
     private Map<String, Object> rules = new HashMap<>();
 
@@ -55,7 +49,6 @@ public class BracketedLSystemInterpreter {
 
         return afterIt;
     }
-
 
     public void doStuff(TurtleLine turtleLine, ArrayList<String> steps, double angle, Group root){
         for (int i = 0; i < steps.size(); i++){

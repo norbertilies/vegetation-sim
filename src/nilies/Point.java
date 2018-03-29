@@ -9,10 +9,6 @@ public class Point {
         this.y = y;
     }
 
-    public static Point copyOf(Point p) {
-        return new Point(p.x, p.y);
-    }
-
     @Override
     public String toString() {
         return "[" + x + "," + y + "]";

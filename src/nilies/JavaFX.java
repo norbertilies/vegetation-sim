@@ -10,13 +10,10 @@ import javafx.stage.Stage;
 import java.util.*;
 
 public class JavaFX extends Application {
-
     @Override
     public void start(Stage stage) {
 
         Group root = new Group();
-
-
 
         Scene scene = new Scene(root, 900, 900, Color.BLACK);
         stage.setScene(scene);
@@ -27,9 +24,6 @@ public class JavaFX extends Application {
                 doMagic(root);
             }
         });
-
-
-
     }
 
     public void doMagic(Group root){
@@ -73,6 +67,4 @@ public class JavaFX extends Application {
         Float b = rand.nextFloat();
         return Color.color(r, g, b);
     }
-
-
 }
