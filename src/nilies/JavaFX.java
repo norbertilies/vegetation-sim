@@ -18,6 +18,10 @@ public class JavaFX extends Application {
     private ArrayList<String> currentIteration = new ArrayList<>(Collections.singletonList(axiom));
     private int timesPressedN = 0;
 
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
+
     @Override
     public void start(Stage stage) {
         Group root = new Group();
@@ -36,19 +40,16 @@ public class JavaFX extends Application {
 
         BracketedLSystemInterpreter interpreter = new BracketedLSystemInterpreter();
 
-
         List<String> rulesForF = new ArrayList<>();
-        rulesForF.add("F[+F]F[-F]F[+F[F]]");
-        rulesForF.add("F[[-F]F[-F]]F[[-F]F[-F]]");
+        rulesForF.add("F[+F]F[-F]F[+F[F]]F");
+        rulesForF.add("F[[-F]F[-F]][[-F]F[-F]]");
+        rulesForF.add("F[-F][F-F[+F]F]");
+        rulesForF.add("F[+F][-F][+F[-F]]");
 
         interpreter.addRule("F", rulesForF);
 
         currentIteration = interpreter.nextIteration(currentIteration);
         interpreter.drawSentence(line, currentIteration, 0, root);
-    }
-
-    public static void main(String[] args) {
-        Application.launch(args);
     }
 
     public static Color randomColor() {

@@ -32,7 +32,6 @@ public class BracketedLSystemInterpreter {
                 afterIt.add(s);
             }
         }
-
         StringBuilder appendedResult = new StringBuilder();
 
         for (String s : afterIt){
@@ -85,7 +84,7 @@ public class BracketedLSystemInterpreter {
         }
     }
 
-    public int getRandomNumberMax(int i){
+    private int getRandomNumberMax(int i){
         return ThreadLocalRandom.current().nextInt(0, i);
     }
 }

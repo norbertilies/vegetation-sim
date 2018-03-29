@@ -9,8 +9,8 @@ import static java.lang.Math.*;
 import static nilies.Constants.lineStroke;
 
 public class TurtleLine {
-    Point p1, p2;
-    double alpha;
+    private Point p1, p2;
+    private double alpha;
 
     TurtleLine(double x1, double y1, double x2, double y2, double alpha) {
         p1 = new Point(x1, y1);
