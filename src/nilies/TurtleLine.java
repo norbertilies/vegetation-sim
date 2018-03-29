@@ -21,7 +21,7 @@ public class TurtleLine {
         Line line = new Line(p1.x, p1.y, p2.x, p2.y);
         line.setStroke(color);
         line.setStrokeLineCap(StrokeLineCap.BUTT);
-        line.setStrokeWidth(1);
+        line.setStrokeWidth(2);
 
         root.getChildren().add(line);
 

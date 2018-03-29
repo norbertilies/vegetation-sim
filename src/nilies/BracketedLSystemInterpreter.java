@@ -4,21 +4,23 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static nilies.JavaFX.randomColor;
+
 
 public class BracketedLSystemInterpreter {
 
 
-    double angleStep = 22.5;
-    double distance = 12;
+    public Double angleStep = 25.7;
+    public Double distance = 5.0;
 
 
 
 
-    private Map<String, String> rules = new HashMap<>();
+    private Map<String, Object> rules = new HashMap<>();
 
-    public void addRule(String something, String turnsInto){
+    public void addRule(String something, Object turnsInto){
         rules.put(something,turnsInto);
     }
 
@@ -27,7 +29,11 @@ public class BracketedLSystemInterpreter {
 
         for (String s : oldIt){
             if (rules.get(s) != null){
-                afterIt.add(rules.get(s));
+                if (rules.get(s) instanceof String)
+                    afterIt.add((String)rules.get(s));
+                else if (rules.get(s) instanceof List){
+                    afterIt.add((String)((List)rules.get(s)).get(getRandomNumberMax(((List)rules.get(s)).size())));
+                }
             } else {
                 afterIt.add(s);
             }
@@ -52,7 +58,6 @@ public class BracketedLSystemInterpreter {
 
 
     public void doStuff(TurtleLine turtleLine, ArrayList<String> steps, double angle, Group root){
-//      F→F[+F]F[-F][F]
         for (int i = 0; i < steps.size(); i++){
             switch (steps.get(i)) {
                 case "[":
@@ -79,11 +84,15 @@ public class BracketedLSystemInterpreter {
                     break;
                 case "F":
                     turtleLine = turtleLine.move(distance, angle);
-                    turtleLine.draw(root, randomColor());
+                    turtleLine.draw(root, Color.DARKGREEN);
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    public int getRandomNumberMax(int i){
+        return ThreadLocalRandom.current().nextInt(0, i);
     }
 }
