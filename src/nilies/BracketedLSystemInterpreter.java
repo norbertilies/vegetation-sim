@@ -6,11 +6,11 @@ import javafx.scene.paint.Color;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static nilies.Constants.angleStep;
+import static nilies.Constants.distance;
+
 
 public class BracketedLSystemInterpreter {
-
-    public Double angleStep = 25.7;
-    public Double distance = 5.0;
 
     private Map<String, Object> rules = new HashMap<>();
 
@@ -50,7 +50,7 @@ public class BracketedLSystemInterpreter {
         return afterIt;
     }
 
-    public void doStuff(TurtleLine turtleLine, ArrayList<String> steps, double angle, Group root){
+    public void drawSentence(TurtleLine turtleLine, ArrayList<String> steps, double angle, Group root){
         for (int i = 0; i < steps.size(); i++){
             switch (steps.get(i)) {
                 case "[":
@@ -67,7 +67,7 @@ public class BracketedLSystemInterpreter {
                         subStep.add(steps.get(i));
                         i++;
                     }
-                    doStuff(turtleLine.getCopy(), subStep, angle, root);
+                    drawSentence(turtleLine.getCopy(), subStep, angle, root);
                     break;
                 case "+":
                     angle += angleStep;

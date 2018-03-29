@@ -6,6 +6,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 
 import static java.lang.Math.*;
+import static nilies.Constants.lineStroke;
 
 public class TurtleLine {
     Point p1, p2;
@@ -21,7 +22,7 @@ public class TurtleLine {
         Line line = new Line(p1.x, p1.y, p2.x, p2.y);
         line.setStroke(color);
         line.setStrokeLineCap(StrokeLineCap.BUTT);
-        line.setStrokeWidth(2);
+        line.setStrokeWidth(lineStroke);
 
         root.getChildren().add(line);
 
