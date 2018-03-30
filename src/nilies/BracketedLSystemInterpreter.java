@@ -11,8 +11,8 @@ import static nilies.JavaFX.randomColor;
 
 
 public class BracketedLSystemInterpreter {
-    public static Boolean timeLimitExceeded;
-    public static Long startTime;
+    static Boolean timeLimitExceeded;
+    static Long startTime;
 
     private Map<String, Object> rules = new HashMap<>();
 

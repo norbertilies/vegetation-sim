@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.*;
-import java.util.List;
 
 import static nilies.BracketedLSystemInterpreter.timeLimitExceeded;
 import static nilies.BracketedLSystemInterpreter.startTime;
@@ -35,7 +34,7 @@ public class JavaFX extends Application {
 
     }
 
-    public void doNextIteration(Group root) {
+    private void doNextIteration(Group root) {
         startTime = System.currentTimeMillis();
         timeLimitExceeded = false;
 
@@ -44,8 +43,8 @@ public class JavaFX extends Application {
 
         BracketedLSystemInterpreter interpreter = new BracketedLSystemInterpreter();
 
-        List<String> rulesForF = new ArrayList<>();
-        rulesForF.add("FF");
+//        List<String> rulesForF = new ArrayList<>();
+//        rulesForF.add("FF");
 
         interpreter.addRule("X", "X+YF+");
         interpreter.addRule("Y", "-FX-Y");
@@ -60,7 +59,7 @@ public class JavaFX extends Application {
         }
     }
 
-    public static Color randomColor() {
+    static Color randomColor() {
         Random rand = new Random();
         Float r = rand.nextFloat();
         Float g = rand.nextFloat();
