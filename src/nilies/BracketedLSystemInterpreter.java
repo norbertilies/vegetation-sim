@@ -6,11 +6,13 @@ import javafx.scene.paint.Color;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static nilies.Constants.angleStep;
-import static nilies.Constants.distance;
+import static nilies.Constants.*;
+import static nilies.JavaFX.randomColor;
 
 
 public class BracketedLSystemInterpreter {
+    public static Boolean timeLimitExceeded;
+    public static Long startTime;
 
     private Map<String, Object> rules = new HashMap<>();
 
@@ -20,8 +22,10 @@ public class BracketedLSystemInterpreter {
 
     public ArrayList<String> nextIteration(ArrayList<String> oldIt){
         ArrayList<String> afterIt = new ArrayList<>();
-
         for (String s : oldIt){
+            if (isTLE()) {
+                return oldIt;
+            }
             if (rules.get(s) != null){
                 if (rules.get(s) instanceof String)
                     afterIt.add((String)rules.get(s));
@@ -33,24 +37,26 @@ public class BracketedLSystemInterpreter {
             }
         }
         StringBuilder appendedResult = new StringBuilder();
-
         for (String s : afterIt){
             appendedResult.append(s);
         }
-
         afterIt = new ArrayList<>();
-
         for (int i = 0; i < appendedResult.toString().length(); i++){
+            if (isTLE()) {
+                return oldIt;
+            }
             char c = appendedResult.charAt(i);
             afterIt.add(Character.toString(c));
         }
         System.out.println(appendedResult);
-
         return afterIt;
     }
 
     public void drawSentence(TurtleLine turtleLine, ArrayList<String> steps, double angle, Group root){
         for (int i = 0; i < steps.size(); i++){
+            if (isTLE()) {
+                break;
+            }
             switch (steps.get(i)) {
                 case "[":
                     i++;
@@ -69,14 +75,14 @@ public class BracketedLSystemInterpreter {
                     drawSentence(turtleLine.getCopy(), subStep, angle, root);
                     break;
                 case "+":
-                    angle += angleStep;
+                    angle += ANGLE_STEP;
                     break;
                 case "-":
-                    angle -= angleStep;
+                    angle -= ANGLE_STEP;
                     break;
                 case "F":
-                    turtleLine = turtleLine.move(distance, angle);
-                    turtleLine.draw(root, Color.DARKGREEN);
+                    turtleLine = turtleLine.move(DISTANCE, angle);
+                    turtleLine.draw(root, RANDOM_COLOR?randomColor():Color.DARKGREEN);
                     break;
                 default:
                     break;
@@ -86,5 +92,13 @@ public class BracketedLSystemInterpreter {
 
     private int getRandomNumberMax(int i){
         return ThreadLocalRandom.current().nextInt(0, i);
+    }
+
+    private boolean isTLE(){
+        if (!timeLimitExceeded && System.currentTimeMillis() - startTime > TIME_TO_LIVE){
+            timeLimitExceeded = true;
+            return true;
+        }
+        return false;
     }
 }
