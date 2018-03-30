@@ -7,4 +7,5 @@ public class Constants {
     public static String AXIOM = "F";
     public static Long TIME_TO_LIVE = 5000L;
     public static Boolean RANDOM_COLOR = false;
+    public static Integer currentRuleSet = 1;
 }

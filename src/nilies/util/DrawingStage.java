@@ -21,59 +21,57 @@ import static nilies.util.Constants.*;
 public class DrawingStage {
 
     private ArrayList<String> currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
-    private int timesPressedN = 0;
+    private int timesPressedW = 0;
 
 
-    public void doNextIteration(Group root) {
+    public void doNextIteration(Group root, RuleSet ruleSet) {
         startTime = System.currentTimeMillis();
         timeLimitExceeded = false;
 
         TurtleLine line = new TurtleLine(450, 900, 450, 888, 90);
 
-        ArrayList<RuleSet> ruleSets = new ArrayList<>();
-        ruleSets.add(firstSetOfRules());
-
-        BracketedLSystemInterpreter interpreter = new BracketedLSystemInterpreter(ruleSets.get(0).getRules());
+        BracketedLSystemInterpreter interpreter = new BracketedLSystemInterpreter(ruleSet.getRules());
         BracketedLSystemDrawingTool drawingTool = new BracketedLSystemDrawingTool();
 
         currentIteration = interpreter.nextIteration(currentIteration);
         drawingTool.drawFromSentence(line, currentIteration, 0, root);
         if (timeLimitExceeded) {
-            timesPressedN--;
+            timesPressedW--;
             System.out.println("Time limit exceeded. Press 'X' to reset to axiom..\n");
         } else {
             System.out.println("Done in " + (System.currentTimeMillis() - startTime) + "ms..\n");
         }
     }
 
-    public void configKeyBinds(Scene scene, Group root) {
+    public void configKeyBinds(Scene scene, Group root, ArrayList<RuleSet> ruleSets) {
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.X) {
                 System.out.println("X pressed -> Resetting pattern to initial AXIOM");
-                timesPressedN = 1;
+                timesPressedW = 1;
                 root.getChildren().clear();
                 currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
-                doNextIteration(root);
-            } else if (e.getCode() == KeyCode.N) {
-                timesPressedN++;
-                System.out.println("N pressed " + timesPressedN + " times..");
+                doNextIteration(root, ruleSets.get(currentRuleSet));
+            } else if (e.getCode() == KeyCode.W) {
+                timesPressedW++;
+                System.out.println("W pressed " + timesPressedW + " times..");
                 root.getChildren().clear();
-                doNextIteration(root);
+                doNextIteration(root, ruleSets.get(currentRuleSet));
+            } else if (e.getCode() == KeyCode.A) {
+                System.out.println("Previous rule set..\n");
+                timesPressedW = 1;
+                root.getChildren().clear();
+                currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
+                currentRuleSet = currentRuleSet - 1 < 0 ? ruleSets.size() - 1 : currentRuleSet - 1;
+                doNextIteration(root, ruleSets.get(currentRuleSet));
+            } else if (e.getCode() == KeyCode.D) {
+                System.out.println("Next rule set..\n");
+                timesPressedW = 1;
+                root.getChildren().clear();
+                currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
+                currentRuleSet = currentRuleSet >= ruleSets.size() - 1 ? 0 : currentRuleSet + 1;
+                doNextIteration(root, ruleSets.get(currentRuleSet));
             }
         });
-    }
-
-    private RuleSet firstSetOfRules(){
-        RuleSet ruleSet = new RuleSet();
-
-        List<String> rulesForF = new ArrayList<>();
-        rulesForF.add("F[+F[F]]F[-F][-F[F]]F[+F]F");
-        rulesForF.add("F[-F]F[F[+F]][-F]F[F[-F]]");
-        rulesForF.add("F[+F]F[-F]F[-F]F[+F]F");
-
-        ruleSet.addRule("F", rulesForF);
-
-        return ruleSet;
     }
 
     public static Color randomColor() {
