@@ -1,4 +1,4 @@
-package nilies;
+package nilies.component;
 
 public class Point {
     double x;

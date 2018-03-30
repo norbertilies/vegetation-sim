@@ -1,4 +1,4 @@
-package nilies;
+package nilies.component;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -6,13 +6,13 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 
 import static java.lang.Math.*;
-import static nilies.Constants.LINE_STROKE;
+import static nilies.util.Constants.*;
 
 public class TurtleLine {
     private Point p1, p2;
     private double alpha;
 
-    TurtleLine(double x1, double y1, double x2, double y2, double alpha) {
+    public TurtleLine(double x1, double y1, double x2, double y2, double alpha) {
         p1 = new Point(x1, y1);
         p2 = new Point(x2, y2);
         this.alpha = alpha;
