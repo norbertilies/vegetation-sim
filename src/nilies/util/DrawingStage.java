@@ -4,14 +4,16 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import nilies.component.RuleSet;
 import nilies.component.TurtleLine;
 import nilies.drawtool.BracketedLSystemDrawingTool;
+import nilies.exception.TLEException;
 import nilies.interpreter.BracketedLSystemInterpreter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 import static nilies.interpreter.BracketedLSystemInterpreter.startTime;
@@ -24,7 +26,7 @@ public class DrawingStage {
     private int timesPressedW = 0;
 
 
-    public void doNextIteration(Group root, RuleSet ruleSet) {
+    public void doNextIteration(Group root, RuleSet ruleSet) throws TLEException {
         startTime = System.currentTimeMillis();
         timeLimitExceeded = false;
 
@@ -37,39 +39,60 @@ public class DrawingStage {
         drawingTool.drawFromSentence(line, currentIteration, 0, root);
         if (timeLimitExceeded) {
             timesPressedW--;
-            System.out.println("Time limit exceeded. Press 'X' to reset to axiom..\n");
-        } else {
-            System.out.println("Done in " + (System.currentTimeMillis() - startTime) + "ms..\n");
         }
     }
 
     public void configKeyBinds(Scene scene, Group root, ArrayList<RuleSet> ruleSets) {
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.X) {
-                System.out.println("X pressed -> Resetting pattern to initial AXIOM");
                 timesPressedW = 1;
                 root.getChildren().clear();
+                root.getChildren().add(getIterationText());
+                root.getChildren().add(getRuleSetText());
                 currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
-                doNextIteration(root, ruleSets.get(currentRuleSet));
+                try {
+                    doNextIteration(root, ruleSets.get(currentRuleSet));
+                } catch (TLEException e1) {
+                    root.getChildren().add(getTLEText());
+                }
             } else if (e.getCode() == KeyCode.W) {
-                timesPressedW++;
-                System.out.println("W pressed " + timesPressedW + " times..");
-                root.getChildren().clear();
-                doNextIteration(root, ruleSets.get(currentRuleSet));
+                if (timeLimitExceeded == null || !timeLimitExceeded) {
+                    timesPressedW++;
+                    root.getChildren().clear();
+                    root.getChildren().add(getIterationText());
+                    root.getChildren().add(getRuleSetText());
+                    try {
+                        doNextIteration(root, ruleSets.get(currentRuleSet));
+                    } catch (TLEException e1) {
+                        root.getChildren().add(getTLEText());
+                    }
+                }
             } else if (e.getCode() == KeyCode.A) {
-                System.out.println("Previous rule set..\n");
                 timesPressedW = 1;
                 root.getChildren().clear();
-                currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
                 currentRuleSet = currentRuleSet - 1 < 0 ? ruleSets.size() - 1 : currentRuleSet - 1;
-                doNextIteration(root, ruleSets.get(currentRuleSet));
+                AXIOM = ruleSets.get(currentRuleSet).getAxiom();
+                currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
+                root.getChildren().add(getIterationText());
+                root.getChildren().add(getRuleSetText());
+                try {
+                    doNextIteration(root, ruleSets.get(currentRuleSet));
+                } catch (TLEException e1) {
+                    root.getChildren().add(getTLEText());
+                }
             } else if (e.getCode() == KeyCode.D) {
-                System.out.println("Next rule set..\n");
                 timesPressedW = 1;
                 root.getChildren().clear();
-                currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
                 currentRuleSet = currentRuleSet >= ruleSets.size() - 1 ? 0 : currentRuleSet + 1;
-                doNextIteration(root, ruleSets.get(currentRuleSet));
+                AXIOM = ruleSets.get(currentRuleSet).getAxiom();
+                currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
+                root.getChildren().add(getIterationText());
+                root.getChildren().add(getRuleSetText());
+                try {
+                    doNextIteration(root, ruleSets.get(currentRuleSet));
+                } catch (TLEException e1) {
+                    root.getChildren().add(getTLEText());
+                }
             }
         });
     }
@@ -80,6 +103,27 @@ public class DrawingStage {
         Float g = rand.nextFloat();
         Float b = rand.nextFloat();
         return Color.color(r, g, b);
+    }
+
+    private Text getRuleSetText(){
+        Text text =  new Text(10,24, "Rule set  #" + currentRuleSet);
+        text.setFill(Color.WHITE);
+        text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
+        return text;
+    }
+
+    private Text getIterationText(){
+        Text text =  new Text(10,48, "Iteration #" + timesPressedW);
+        text.setFill(Color.WHITE);
+        text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
+        return text;
+    }
+
+    private Text getTLEText(){
+        Text text =  new Text(10,72, "Time limit exceeded.\nPlease press X to reset.");
+        text.setFill(Color.WHITE);
+        text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
+        return text;
     }
 }
 

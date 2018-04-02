@@ -1,5 +1,7 @@
 package nilies.interpreter;
 
+import nilies.exception.TLEException;
+
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,7 +17,7 @@ public class BracketedLSystemInterpreter {
         this.rules = rules;
     }
 
-    public ArrayList<String> nextIteration(ArrayList<String> oldIt){
+    public ArrayList<String> nextIteration(ArrayList<String> oldIt) throws TLEException {
         ArrayList<String> afterIt = new ArrayList<>();
         for (String s : oldIt){
             if (isTLE()) {
@@ -43,7 +45,6 @@ public class BracketedLSystemInterpreter {
             char c = appendedResult.charAt(i);
             afterIt.add(Character.toString(c));
         }
-        System.out.println(appendedResult);
         return afterIt;
     }
 

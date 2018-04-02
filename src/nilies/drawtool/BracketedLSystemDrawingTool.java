@@ -3,6 +3,7 @@ package nilies.drawtool;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import nilies.component.TurtleLine;
+import nilies.exception.TLEException;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ import static nilies.util.DrawingStage.randomColor;
 
 public class BracketedLSystemDrawingTool {
 
-    public void drawFromSentence(TurtleLine turtleLine, ArrayList<String> steps, double angle, Group root){
+    public void drawFromSentence(TurtleLine turtleLine, ArrayList<String> steps, double angle, Group root) throws TLEException {
         for (int i = 0; i < steps.size(); i++){
             if (isTLE()) {
                 break;
