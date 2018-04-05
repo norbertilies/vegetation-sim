@@ -112,28 +112,28 @@ public class DrawingStage {
     }
 
     private Text getRuleSetText(){
-        Text text =  new Text(10,24, "Rule set  #" + currentRuleSet);
+        Text text =  new Text(10,796, "Rule set  #" + currentRuleSet);
         text.setFill(TEXT_COLOR);
         text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
         return text;
     }
 
     private Text getIterationText(){
-        Text text =  new Text(10,48, "Iteration #" + timesPressedW);
+        Text text =  new Text(10,820, "Iteration #" + timesPressedW);
         text.setFill(TEXT_COLOR);
         text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
         return text;
     }
 
     private Text getTLEText(){
-        Text text =  new Text(10,72, "Time limit exceeded.\nMaximum admited is "+TIME_TO_LIVE+"ms.\nPlease press X to reset.");
+        Text text =  new Text(10,844, "Time limit exceeded.\nMaximum admited is "+TIME_TO_LIVE+"ms.\nPlease press X to reset.");
         text.setFill(TEXT_COLOR);
         text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
         return text;
     }
 
     private Text getTimeText(Long time){
-        Text text =  new Text(10,72, "Time   "+fixedLengthString( time+"ms\n", 6));
+        Text text =  new Text(10,844, "Time   "+fixedLengthString( time+"ms\n", 6));
         text.setFill(TEXT_COLOR);
         text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
         return text;
