@@ -10,6 +10,6 @@ public class Constants {
     public static Long TIME_TO_LIVE = 5000L;
     public static Boolean RANDOM_COLOR = false;
     public static Color BACKGROUND_COLOR = Color.WHITE;
-    public static Color TEXT_COLOR = Color.DARKMAGENTA;
+    public static Color TEXT_COLOR = Color.DARKBLUE;
     public static Integer currentRuleSet = 0;
 }

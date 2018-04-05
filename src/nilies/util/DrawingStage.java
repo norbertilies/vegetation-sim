@@ -133,10 +133,14 @@ public class DrawingStage {
     }
 
     private Text getTimeText(Long time){
-        Text text =  new Text(10,72, "Time: "+ time+"ms\n");
+        Text text =  new Text(10,72, "Time   "+fixedLengthString( time+"ms\n", 6));
         text.setFill(TEXT_COLOR);
         text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
         return text;
+    }
+
+    public static String fixedLengthString(String string, int length) {
+        return String.format("%1$"+length+ "s", string);
     }
 }
 
