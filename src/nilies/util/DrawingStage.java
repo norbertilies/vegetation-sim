@@ -25,8 +25,8 @@ public class DrawingStage {
     private ArrayList<String> currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
     private int timesPressedW = 0;
 
-
-    public void doNextIteration(Group root, RuleSet ruleSet) throws TLEException {
+    //returns the time it took to execute
+    private Long doNextIteration(Group root, RuleSet ruleSet) throws TLEException {
         startTime = System.currentTimeMillis();
         timeLimitExceeded = false;
 
@@ -40,6 +40,7 @@ public class DrawingStage {
         if (timeLimitExceeded) {
             timesPressedW--;
         }
+        return System.currentTimeMillis()-startTime;
     }
 
     public void configKeyBinds(Scene scene, Group root, ArrayList<RuleSet> ruleSets) {
@@ -62,7 +63,10 @@ public class DrawingStage {
                     root.getChildren().add(getIterationText());
                     root.getChildren().add(getRuleSetText());
                     try {
-                        doNextIteration(root, ruleSets.get(currentRuleSet));
+                        //add time it took to execute
+                        root.getChildren().add(
+                                getTimeText(doNextIteration(root, ruleSets.get(currentRuleSet)
+                                )));
                     } catch (TLEException e1) {
                         root.getChildren().add(getTLEText());
                     }
@@ -109,21 +113,28 @@ public class DrawingStage {
 
     private Text getRuleSetText(){
         Text text =  new Text(10,24, "Rule set  #" + currentRuleSet);
-        text.setFill(Color.WHITE);
+        text.setFill(TEXT_COLOR);
         text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
         return text;
     }
 
     private Text getIterationText(){
         Text text =  new Text(10,48, "Iteration #" + timesPressedW);
-        text.setFill(Color.WHITE);
+        text.setFill(TEXT_COLOR);
         text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
         return text;
     }
 
     private Text getTLEText(){
-        Text text =  new Text(10,72, "Time limit exceeded.\nPlease press X to reset.");
-        text.setFill(Color.WHITE);
+        Text text =  new Text(10,72, "Time limit exceeded.\nMaximum admited is "+TIME_TO_LIVE+"ms.\nPlease press X to reset.");
+        text.setFill(TEXT_COLOR);
+        text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
+        return text;
+    }
+
+    private Text getTimeText(Long time){
+        Text text =  new Text(10,72, "Time: "+ time+"ms\n");
+        text.setFill(TEXT_COLOR);
         text.setFont(Font.font(java.awt.Font.MONOSPACED, 20));
         return text;
     }

@@ -2,7 +2,6 @@ package nilies;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import nilies.component.RuleSet;
 import nilies.util.Constants;
@@ -16,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static nilies.util.Constants.BACKGROUND_COLOR;
+
 public class VegetationSimApp extends javafx.application.Application {
 
     public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class VegetationSimApp extends javafx.application.Application {
     @Override
     public void start(Stage stage) {
         Group root = new Group();
-        Scene scene = new Scene(root, 900, 900, Color.BLACK);
+        Scene scene = new Scene(root, 900, 900, BACKGROUND_COLOR);
         stage.setScene(scene);
         stage.show();
 
