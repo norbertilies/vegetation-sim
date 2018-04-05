@@ -72,6 +72,7 @@ public class DrawingStage {
                 root.getChildren().clear();
                 currentRuleSet = currentRuleSet - 1 < 0 ? ruleSets.size() - 1 : currentRuleSet - 1;
                 AXIOM = ruleSets.get(currentRuleSet).getAxiom();
+                ANGLE_STEP = ruleSets.get(currentRuleSet).getAlpha();
                 currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
                 root.getChildren().add(getIterationText());
                 root.getChildren().add(getRuleSetText());
@@ -85,6 +86,7 @@ public class DrawingStage {
                 root.getChildren().clear();
                 currentRuleSet = currentRuleSet >= ruleSets.size() - 1 ? 0 : currentRuleSet + 1;
                 AXIOM = ruleSets.get(currentRuleSet).getAxiom();
+                ANGLE_STEP = ruleSets.get(currentRuleSet).getAlpha();
                 currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
                 root.getChildren().add(getIterationText());
                 root.getChildren().add(getRuleSetText());

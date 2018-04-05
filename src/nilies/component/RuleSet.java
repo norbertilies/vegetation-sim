@@ -5,6 +5,7 @@ import java.util.*;
 public class RuleSet {
     private String axiom;
     private Map<String, Object> rules;
+    private Double alpha;
 
     public RuleSet(){
         rules = new HashMap<>();
@@ -14,7 +15,10 @@ public class RuleSet {
         if (rules.get(letter) == null) {
             rules.put(letter, turnsInto);
         } else if (rules.get(letter) instanceof String){
-            rules.put(letter, new ArrayList<>(Collections.singletonList(turnsInto)));
+            ArrayList<String> ruleList = new ArrayList<>();
+            ruleList.add(turnsInto);
+            ruleList.add((String) this.rules.get(letter));
+            this.rules.put(letter,ruleList);
         } else {
             ((List)rules.get(letter)).add(turnsInto);
         }
@@ -30,5 +34,13 @@ public class RuleSet {
 
     public void setAxiom(String axiom) {
         this.axiom = axiom;
+    }
+
+    public Double getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(Double alpha) {
+        this.alpha = alpha;
     }
 }

@@ -5,7 +5,7 @@ public class Constants {
     public static Double DISTANCE = 6.0;
     public static Integer LINE_STROKE = 1;
     public static String AXIOM;
-    public static Long TIME_TO_LIVE = 3000L;
+    public static Long TIME_TO_LIVE = 3500L;
     public static Boolean RANDOM_COLOR = false;
     public static Integer currentRuleSet = 0;
 }

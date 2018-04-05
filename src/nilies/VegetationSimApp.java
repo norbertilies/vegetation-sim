@@ -32,6 +32,7 @@ public class VegetationSimApp extends javafx.application.Application {
         ArrayList<RuleSet> ruleSets = readPredefinedRuleSets();
 
         Constants.AXIOM = ruleSets.get(0).getAxiom();
+        Constants.ANGLE_STEP = ruleSets.get(0).getAlpha();
 
         DrawingStage drawingStage = new DrawingStage();
         //X -> reset to axiom; W -> next iteration; A,D -> next, previous rule set
@@ -64,6 +65,8 @@ public class VegetationSimApp extends javafx.application.Application {
             String line = reader.readLine();
             if (line != null) {
                 ruleSet.setAxiom(line);
+                line = reader.readLine();
+                ruleSet.setAlpha(Double.valueOf(line));
                 line = reader.readLine();
                 do {
                     List<String> splitLine = Arrays.stream(line.split("->")).map(String::trim).collect(Collectors.toList());
