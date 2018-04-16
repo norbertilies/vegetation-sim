@@ -12,7 +12,7 @@ import java.util.List;
 public class Flower {
     private Point point;
     private Integer numberOfPetalsPerHalf;
-    private static Double petalLength = 7.0;
+    private static Double petalLength = 5.0;
 
     public Flower(Point point, Integer numberOfPetalsPerHalf){
         this.point = point;
@@ -33,7 +33,7 @@ public class Flower {
         Circle circle = new Circle();
         circle.setCenterX(point.x);
         circle.setCenterY(point.y - petalLength/2);
-        circle.setRadius(3);
+        circle.setRadius(2);
         circle.setFill(Color.YELLOW);
 
         root.getChildren().add(circle);
@@ -52,7 +52,7 @@ public class Flower {
             centerX = (point.x + destination.x) / 2;
             centerY = (point.y + destination.y) / 2;
 
-            Ellipse petal = new Ellipse(centerX, centerY, petalLength, petalLength / 3);
+            Ellipse petal = new Ellipse(centerX, centerY, petalLength, petalLength / 4);
             petal.setRotate(90.0+angleOfPetal*(i+1));
 
             petals.add(petal);
