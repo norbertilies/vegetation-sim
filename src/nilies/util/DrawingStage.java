@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import nilies.component.Point;
 import nilies.component.RuleSet;
 import nilies.component.TurtleLine;
 import nilies.drawtool.BracketedLSystemDrawingTool;
@@ -22,21 +23,23 @@ import static nilies.util.Constants.*;
 
 public class DrawingStage {
 
+    private static Point defaultPoint = new Point(450,900);
+
     private ArrayList<String> currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
-    private int timesPressedW = 0;
+    public static int timesPressedW = 0;
 
     //returns the time it took to execute
-    private Long doNextIteration(Group root, RuleSet ruleSet) throws TLEException {
+    private Long doNextIteration(Group root, RuleSet ruleSet, Point point) throws TLEException {
         startTime = System.currentTimeMillis();
         timeLimitExceeded = false;
 
-        TurtleLine line = new TurtleLine(450, 900, 450, 888, 90);
+        TurtleLine line = new TurtleLine(point.x, point.y,point.x, point.y, 90);
 
         BracketedLSystemInterpreter interpreter = new BracketedLSystemInterpreter(ruleSet.getRules());
         BracketedLSystemDrawingTool drawingTool = new BracketedLSystemDrawingTool();
 
         currentIteration = interpreter.nextIteration(currentIteration);
-        drawingTool.drawFromSentence(line, currentIteration, 0, root);
+        drawingTool.drawFromSentence(line, currentIteration, 0, root, 3.3);
         if (timeLimitExceeded) {
             timesPressedW--;
         }
@@ -52,7 +55,7 @@ public class DrawingStage {
                 root.getChildren().add(getRuleSetText());
                 currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
                 try {
-                    doNextIteration(root, ruleSets.get(currentRuleSet));
+                    doNextIteration(root, ruleSets.get(currentRuleSet), defaultPoint);
                 } catch (TLEException e1) {
                     root.getChildren().add(getTLEText());
                 }
@@ -65,7 +68,7 @@ public class DrawingStage {
                     try {
                         //add time it took to execute
                         root.getChildren().add(
-                                getTimeText(doNextIteration(root, ruleSets.get(currentRuleSet)
+                                getTimeText(doNextIteration(root, ruleSets.get(currentRuleSet), defaultPoint
                                 )));
                     } catch (TLEException e1) {
                         root.getChildren().add(getTLEText());
@@ -81,7 +84,7 @@ public class DrawingStage {
                 root.getChildren().add(getIterationText());
                 root.getChildren().add(getRuleSetText());
                 try {
-                    doNextIteration(root, ruleSets.get(currentRuleSet));
+                    doNextIteration(root, ruleSets.get(currentRuleSet), defaultPoint);
                 } catch (TLEException e1) {
                     root.getChildren().add(getTLEText());
                 }
@@ -95,12 +98,52 @@ public class DrawingStage {
                 root.getChildren().add(getIterationText());
                 root.getChildren().add(getRuleSetText());
                 try {
-                    doNextIteration(root, ruleSets.get(currentRuleSet));
+                    doNextIteration(root, ruleSets.get(currentRuleSet), defaultPoint);
                 } catch (TLEException e1) {
                     root.getChildren().add(getTLEText());
                 }
+            } else if (e.getCode() == KeyCode.G){
+                GARDEN_ONGOING = true;
+                root.getChildren().clear();
+                int startX, startY;
+                startX = 50;
+                startY = 70;
+                do{
+                    currentRuleSet = getRandomInteger(ruleSets.size());
+                    AXIOM = ruleSets.get(currentRuleSet).getAxiom();
+                    ANGLE_STEP = ruleSets.get(currentRuleSet).getAlpha();
+                    currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
+                    for (int i = 0;i < 4; i++){
+                        try {
+                            doNextIteration(root, ruleSets.get(currentRuleSet),
+                                    new Point(startX + randomConvertToNegative(getRandomInteger(15)),
+                                            startY + randomConvertToNegative(getRandomInteger(15))));
+                        } catch (TLEException e1) {
+                            //should never be reached
+                            e1.printStackTrace();
+                        }
+                    }
+                    startX += getRandomInteger(70)+30;
+                    if (startX > 850){
+                        startX = getRandomInteger(70)+30;
+                        startY += getRandomInteger(80)+100;
+                    }
+                } while (startY < 1000);
+                GARDEN_ONGOING = false;
             }
         });
+    }
+
+    public Integer getRandomInteger(int max){
+        Random rand = new Random();
+        return rand.nextInt(max);
+    }
+
+    public Integer randomConvertToNegative(int number){
+        Random rand = new Random();
+        if (rand.nextBoolean())
+            return -number;
+        return number;
     }
 
     public static Color randomColor() {

@@ -1,0 +1,48 @@
+F
+22.5
+F -> F[+F[-F]]F[-F][+F[F][+F]]F
+F -> F[-F]F[F][-F]F[F[-F]]
+F -> F[+F][-F[-F]][+F]F
+
+X
+22.5
+F -> F[+F[-X]]F[-F][+F[X][+X]]F
+F -> F[-F]F[X][-X]F[F[-X]]
+F -> F[+F][-F[-X]][+F]F
+X -> F
+
+F
+22.5
+F -> F[+F]F[-F]F[-F]F[+F]F
+
+F
+25.7
+F -> F[+F]F[-F]F
+
+F
+20
+F -> F[+F]F[-F][F]
+
+F
+22.5
+F -> FF-[-F+F+F]+[+F-F-F]
+
+X
+20
+X -> F[+X]F[-X]+X
+F -> FF
+
+X
+25.7
+X -> F[+X][-X]FX
+F -> FF
+
+X
+22.5
+X -> F-[[X]+X]+F[+FX]-X
+F -> FF
+
+F
+45
+F -> FX+
+
