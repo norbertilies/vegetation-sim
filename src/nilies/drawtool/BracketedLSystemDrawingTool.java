@@ -49,7 +49,7 @@ public class BracketedLSystemDrawingTool {
                     turtleLine.draw(root, STANDARD_COLOR, stroke);
                     break;
                 case "X":
-                    if (generateRandomSubunitarNumber() < 0.92) {
+                    if (generateRandomSubunitarNumber() < 0.95) {
                         if ((DrawingStage.timesPressedW > 2 || GARDEN_ONGOING) && angle != 90) {
                             Leaf leaf = new Leaf(turtleLine.getP1(), angle, RANDOM_COLOR ? randomColor() : LEAF_COLOR);
                             leaf.draw(root);

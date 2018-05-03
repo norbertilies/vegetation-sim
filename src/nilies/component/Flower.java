@@ -12,7 +12,7 @@ import java.util.List;
 public class Flower {
     private Point point;
     private Integer numberOfPetalsPerHalf;
-    private static Double petalLength = 5.0;
+    private static Double petalLength = 8.0;
 
     public Flower(Point point, Integer numberOfPetalsPerHalf){
         this.point = point;
@@ -25,7 +25,7 @@ public class Flower {
 
         petalPair.forEach(p -> {
 //            Color color1 = randomColor();
-            p.setStroke(color);
+            p.setStroke(Color.rgb(240,90,20));
             p.setFill(color);
             root.getChildren().add(p);
         });
@@ -33,7 +33,7 @@ public class Flower {
         Circle circle = new Circle();
         circle.setCenterX(point.x);
         circle.setCenterY(point.y - petalLength/2);
-        circle.setRadius(2);
+        circle.setRadius(2.5);
         circle.setFill(Color.YELLOW);
 
         root.getChildren().add(circle);

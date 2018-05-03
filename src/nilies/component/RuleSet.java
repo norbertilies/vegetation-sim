@@ -6,6 +6,7 @@ public class RuleSet {
     private String axiom;
     private Map<String, Object> rules;
     private Double alpha;
+    private Integer optimalIterations;
 
     public RuleSet(){
         rules = new HashMap<>();
@@ -42,5 +43,13 @@ public class RuleSet {
 
     public void setAlpha(Double alpha) {
         this.alpha = alpha;
+    }
+
+    public Integer getOptimalIterations() {
+        return optimalIterations;
+    }
+
+    public void setOptimalIterations(Integer optimalIterations) {
+        this.optimalIterations = optimalIterations;
     }
 }

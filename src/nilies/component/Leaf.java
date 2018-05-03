@@ -2,15 +2,18 @@ package nilies.component;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.QuadCurve;
 import nilies.util.TranslateUtil;
 
-import static nilies.util.Constants.DISTANCE;
+import java.util.ArrayList;
+import java.util.List;
+
+import static nilies.util.Constants.LEAF_LENGTH;
+
 
 public class Leaf {
     private Point start;
     private Double angle;
-    private static Double leafLength = DISTANCE*2/3;
     private Color color;
 
     public Leaf(Point start, Double angle, Color color){
@@ -20,25 +23,26 @@ public class Leaf {
     }
 
     public void draw(Group root) {
-        Ellipse leaf = generateLeaf();
+        List<QuadCurve> leaf = generateLeaf();
 
-        leaf.setStroke(color);
-        leaf.setFill(color);
-        leaf.setRotate(angle+90);
-        root.getChildren().add(leaf);
-
+        leaf.forEach( l -> {
+            l.setStroke(Color.DARKGREEN);
+            l.setFill(color);
+            root.getChildren().add(l);
+        });
     }
 
-    public Ellipse generateLeaf() {
+    public List<QuadCurve> generateLeaf() {
+        List<QuadCurve> quadCurves = new ArrayList<>();
 
-        Point destination = TranslateUtil.moveTowardsAngle(start, angle, leafLength);
+        Point destination = TranslateUtil.moveTowardsAngle(start, angle, LEAF_LENGTH);
 
-        Double centerX, centerY;
-        centerX = (start.x + destination.x)/2;
-        centerY = (start.y+ destination.y)/2;
+        QuadCurve a,b;
+        a = new QuadCurve(start.x, start.y, start.x+LEAF_LENGTH/2, start.y+LEAF_LENGTH/2, destination.x, destination.y);
+        b = new QuadCurve(start.x, start.y, start.x+LEAF_LENGTH/2, start.y-LEAF_LENGTH/2, destination.x, destination.y);
+        quadCurves.add(a);
+        quadCurves.add(b);
 
-        Ellipse leaf = new Ellipse(centerX, centerY, leafLength, leafLength/2);
-
-        return leaf;
+        return quadCurves;
     }
 }

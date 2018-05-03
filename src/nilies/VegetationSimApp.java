@@ -69,6 +69,8 @@ public class VegetationSimApp extends javafx.application.Application {
                 line = reader.readLine();
                 ruleSet.setAlpha(Double.valueOf(line));
                 line = reader.readLine();
+                ruleSet.setOptimalIterations(Integer.valueOf(line));
+                line = reader.readLine();
                 do {
                     List<String> splitLine = Arrays.stream(line.split("->")).map(String::trim).collect(Collectors.toList());
                     ruleSet.addRule(splitLine.get(0), splitLine.get(1));

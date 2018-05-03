@@ -27,23 +27,27 @@ public class DrawingStage {
 
     private ArrayList<String> currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
     public static int timesPressedW = 0;
+    private TurtleLine line;
 
     //returns the time it took to execute
-    private Long doNextIteration(Group root, RuleSet ruleSet, Point point) throws TLEException {
+    private Long doNextIteration(RuleSet ruleSet, Point point) throws TLEException {
         startTime = System.currentTimeMillis();
         timeLimitExceeded = false;
 
-        TurtleLine line = new TurtleLine(point.x, point.y,point.x, point.y, 90);
+        line = new TurtleLine(point.x, point.y,point.x, point.y, 90);
 
         BracketedLSystemInterpreter interpreter = new BracketedLSystemInterpreter(ruleSet.getRules());
-        BracketedLSystemDrawingTool drawingTool = new BracketedLSystemDrawingTool();
 
         currentIteration = interpreter.nextIteration(currentIteration);
+        return System.currentTimeMillis()-startTime;
+    }
+
+    private void draw(Group root) throws TLEException {
+        BracketedLSystemDrawingTool drawingTool = new BracketedLSystemDrawingTool();
         drawingTool.drawFromSentence(line, currentIteration, 0, root, 3.3);
         if (timeLimitExceeded) {
             timesPressedW--;
         }
-        return System.currentTimeMillis()-startTime;
     }
 
     public void configKeyBinds(Scene scene, Group root, ArrayList<RuleSet> ruleSets) {
@@ -55,7 +59,8 @@ public class DrawingStage {
                 root.getChildren().add(getRuleSetText());
                 currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
                 try {
-                    doNextIteration(root, ruleSets.get(currentRuleSet), defaultPoint);
+                    doNextIteration(ruleSets.get(currentRuleSet), defaultPoint);
+                    draw(root);
                 } catch (TLEException e1) {
                     root.getChildren().add(getTLEText());
                 }
@@ -68,8 +73,9 @@ public class DrawingStage {
                     try {
                         //add time it took to execute
                         root.getChildren().add(
-                                getTimeText(doNextIteration(root, ruleSets.get(currentRuleSet), defaultPoint
+                                getTimeText(doNextIteration(ruleSets.get(currentRuleSet), defaultPoint
                                 )));
+                        draw(root);
                     } catch (TLEException e1) {
                         root.getChildren().add(getTLEText());
                     }
@@ -84,7 +90,8 @@ public class DrawingStage {
                 root.getChildren().add(getIterationText());
                 root.getChildren().add(getRuleSetText());
                 try {
-                    doNextIteration(root, ruleSets.get(currentRuleSet), defaultPoint);
+                    doNextIteration(ruleSets.get(currentRuleSet), defaultPoint);
+                    draw(root);
                 } catch (TLEException e1) {
                     root.getChildren().add(getTLEText());
                 }
@@ -98,7 +105,8 @@ public class DrawingStage {
                 root.getChildren().add(getIterationText());
                 root.getChildren().add(getRuleSetText());
                 try {
-                    doNextIteration(root, ruleSets.get(currentRuleSet), defaultPoint);
+                    doNextIteration(ruleSets.get(currentRuleSet), defaultPoint);
+                    draw(root);
                 } catch (TLEException e1) {
                     root.getChildren().add(getTLEText());
                 }
@@ -113,20 +121,26 @@ public class DrawingStage {
                     AXIOM = ruleSets.get(currentRuleSet).getAxiom();
                     ANGLE_STEP = ruleSets.get(currentRuleSet).getAlpha();
                     currentIteration = new ArrayList<>(Collections.singletonList(AXIOM));
-                    for (int i = 0;i < 4; i++){
+                    Point p = new Point(startX + randomConvertToNegative(getRandomInteger(15)),
+                            startY + randomConvertToNegative(getRandomInteger(15)));
+                    for (int i = 0;i < ruleSets.get(currentRuleSet).getOptimalIterations(); i++){
                         try {
-                            doNextIteration(root, ruleSets.get(currentRuleSet),
-                                    new Point(startX + randomConvertToNegative(getRandomInteger(15)),
-                                            startY + randomConvertToNegative(getRandomInteger(15))));
+                            doNextIteration(ruleSets.get(currentRuleSet), p);
                         } catch (TLEException e1) {
                             //should never be reached
                             e1.printStackTrace();
                         }
                     }
-                    startX += getRandomInteger(70)+30;
+                    try {
+                        draw(root);
+                    } catch (TLEException e1) {
+                        //should never be reached
+                        e1.printStackTrace();
+                    }
+                    startX += getRandomInteger(70)+50;
                     if (startX > 850){
-                        startX = getRandomInteger(70)+30;
-                        startY += getRandomInteger(80)+100;
+                        startX = getRandomInteger(70)+50;
+                        startY += getRandomInteger(80)+90;
                     }
                 } while (startY < 1000);
                 GARDEN_ONGOING = false;
