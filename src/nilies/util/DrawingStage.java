@@ -6,6 +6,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import nilies.component.Menu;
 import nilies.component.Point;
 import nilies.component.RuleSet;
 import nilies.component.TurtleLine;
@@ -50,7 +52,7 @@ public class DrawingStage {
         }
     }
 
-    public void configKeyBinds(Scene scene, Group root, ArrayList<RuleSet> ruleSets) {
+    public void configKeyBinds(Stage stage, Scene scene, Group root) {
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.X) {
                 timesPressedW = 1;
@@ -64,6 +66,7 @@ public class DrawingStage {
                 } catch (TLEException e1) {
                     root.getChildren().add(getTLEText());
                 }
+                new Menu(root, stage, ruleSets);
             } else if (e.getCode() == KeyCode.W) {
                 if (timeLimitExceeded == null || !timeLimitExceeded) {
                     timesPressedW++;
@@ -80,6 +83,7 @@ public class DrawingStage {
                         root.getChildren().add(getTLEText());
                     }
                 }
+                new Menu(root, stage, ruleSets);
             } else if (e.getCode() == KeyCode.A) {
                 timesPressedW = 1;
                 root.getChildren().clear();
@@ -95,6 +99,7 @@ public class DrawingStage {
                 } catch (TLEException e1) {
                     root.getChildren().add(getTLEText());
                 }
+                new Menu(root, stage, ruleSets);
             } else if (e.getCode() == KeyCode.D) {
                 timesPressedW = 1;
                 root.getChildren().clear();
@@ -110,7 +115,9 @@ public class DrawingStage {
                 } catch (TLEException e1) {
                     root.getChildren().add(getTLEText());
                 }
+                new Menu(root, stage, ruleSets);
             } else if (e.getCode() == KeyCode.G){
+                System.out.println("asd");
                 GARDEN_ONGOING = true;
                 root.getChildren().clear();
                 int startX, startY;
@@ -144,7 +151,9 @@ public class DrawingStage {
                     }
                 } while (startY < 1000);
                 GARDEN_ONGOING = false;
+                new Menu(root, stage, ruleSets);
             }
+
         });
     }
 

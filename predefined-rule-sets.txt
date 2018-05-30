@@ -1,21 +1,25 @@
+Tree1
 X
 20
 4
 X -> F[+X]F[-X]+X
 F -> FF
 
+Tree2
 X
 25.7
 4
 X -> F[+X][-X]FX
 F -> FF
 
+Tree3
 X
 22.5
 4
 X -> F-[[X]+X]+F[+FX]-X
 F -> FF
 
+Bush
 X
 22.5
 7

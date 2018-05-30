@@ -2,11 +2,15 @@ package nilies;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import nilies.component.Menu;
 import nilies.component.RuleSet;
 import nilies.util.Constants;
 import nilies.util.DrawingStage;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static nilies.util.Constants.BACKGROUND_COLOR;
+import static nilies.util.Constants.ruleSets;
 
 public class VegetationSimApp extends javafx.application.Application {
 
@@ -26,22 +31,23 @@ public class VegetationSimApp extends javafx.application.Application {
     @Override
     public void start(Stage stage) {
         Group root = new Group();
-        Scene scene = new Scene(root, 900, 900, BACKGROUND_COLOR);
+        Scene scene = new Scene(root, 900, 1000, BACKGROUND_COLOR);
         stage.setScene(scene);
         stage.show();
 
-        ArrayList<RuleSet> ruleSets = readPredefinedRuleSets();
+        readPredefinedRuleSets();
 
         Constants.AXIOM = ruleSets.get(0).getAxiom();
         Constants.ANGLE_STEP = ruleSets.get(0).getAlpha();
 
         DrawingStage drawingStage = new DrawingStage();
         //X -> reset to axiom; W -> next iteration; A,D -> next, previous rule set
-        drawingStage.configKeyBinds(scene, root, ruleSets);
+        drawingStage.configKeyBinds(stage, scene, root);
+        new Menu(root, stage, ruleSets);
+
     }
 
-    private ArrayList<RuleSet> readPredefinedRuleSets(){
-        ArrayList<RuleSet> ruleSets = new ArrayList<>();
+    private void readPredefinedRuleSets(){
         try {
             FileReader fileReader = new FileReader("predefined-rule-sets.txt");
             BufferedReader bufferedReader =
@@ -57,7 +63,6 @@ public class VegetationSimApp extends javafx.application.Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ruleSets;
     }
 
     private RuleSet readNewRuleSet(BufferedReader reader){
@@ -65,6 +70,8 @@ public class VegetationSimApp extends javafx.application.Application {
         try {
             String line = reader.readLine();
             if (line != null) {
+                ruleSet.setName(line);
+                line = reader.readLine();
                 ruleSet.setAxiom(line);
                 line = reader.readLine();
                 ruleSet.setAlpha(Double.valueOf(line));
