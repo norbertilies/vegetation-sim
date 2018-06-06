@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static nilies.util.Constants.LEAF_LENGTH;
+import static nilies.util.Constants.LEAF_STROKE;
 
 
 public class Leaf {
@@ -26,7 +27,7 @@ public class Leaf {
         List<QuadCurve> leaf = generateLeaf();
 
         leaf.forEach( l -> {
-            l.setStroke(Color.DARKGREEN);
+            l.setStroke(LEAF_STROKE);
             l.setFill(color);
             root.getChildren().add(l);
         });

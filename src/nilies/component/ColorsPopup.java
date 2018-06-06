@@ -15,12 +15,15 @@ public class ColorsPopup {
     private final ColorPicker flower;
     private final ColorPicker bark;
     private final ColorPicker leaf;
+    private final ColorPicker leafStroke;
+    private final ColorPicker flowerStroke;
+    private final ColorPicker flowerCenter;
 
     public ColorsPopup(Stage mainStage){
         popup = new Stage();
 
         Group root = new Group();
-        Scene popupScene = new Scene(root, 230, 215, Color.LIGHTGRAY);
+        Scene popupScene = new Scene(root, 230, 280, Color.LIGHTGRAY);
         popup.initOwner(mainStage);
         popup.setScene(popupScene);
         popup.show();
@@ -28,16 +31,19 @@ public class ColorsPopup {
         flower = addFlowerColorPicker(root);
         bark = addBarkColorPicker(root);
         leaf = addLeafColorPicker(root);
+        flowerCenter = addFlowerCenterColorPicker(root);
+        flowerStroke = addFlowerStrokeColorPicker(root);
+        leafStroke = addLeafStrokeColorPicker(root);
         addSaveButton(root);
 
     }
 
-    public ColorPicker addFlowerColorPicker(Group root){
-        ColorPicker colorPicker = new ColorPicker(FLOWER_COLOR);
+    public ColorPicker addBarkColorPicker(Group root){
+        ColorPicker colorPicker = new ColorPicker(STANDARD_COLOR);
         colorPicker.setLayoutX(70);
         colorPicker.setLayoutY(10);
 
-        Label label = new Label("Flower: ");
+        Label label = new Label("Bark: ");
         label.setLayoutX(10);
         label.setLayoutY(15);
 
@@ -47,12 +53,12 @@ public class ColorsPopup {
         return colorPicker;
     }
 
-    public ColorPicker addBarkColorPicker(Group root){
-        ColorPicker colorPicker = new ColorPicker(STANDARD_COLOR);
+    public ColorPicker addFlowerColorPicker(Group root){
+        ColorPicker colorPicker = new ColorPicker(FLOWER_COLOR);
         colorPicker.setLayoutX(70);
         colorPicker.setLayoutY(50);
 
-        Label label = new Label("Bark: ");
+        Label label = new Label("Flower: ");
         label.setLayoutX(10);
         label.setLayoutY(55);
 
@@ -62,14 +68,60 @@ public class ColorsPopup {
         return colorPicker;
     }
 
-    public ColorPicker addLeafColorPicker(Group root){
-        ColorPicker colorPicker = new ColorPicker(LEAF_COLOR);
+    public ColorPicker addFlowerStrokeColorPicker(Group root){
+        ColorPicker colorPicker = new ColorPicker(FLOWER_STROKE);
         colorPicker.setLayoutX(70);
         colorPicker.setLayoutY(90);
 
-        Label label = new Label("Leaf: ");
+        Label label = new Label("Flower stroke: ");
         label.setLayoutX(10);
         label.setLayoutY(95);
+
+        root.getChildren().add(label);
+        root.getChildren().add(colorPicker);
+
+        return colorPicker;
+    }
+
+    public ColorPicker addFlowerCenterColorPicker(Group root){
+        ColorPicker colorPicker = new ColorPicker(FLOWER_CENTER_FILL);
+        colorPicker.setLayoutX(70);
+        colorPicker.setLayoutY(130);
+
+        Label label = new Label("Flower center: ");
+        label.setLayoutX(10);
+        label.setLayoutY(135);
+
+        root.getChildren().add(label);
+        root.getChildren().add(colorPicker);
+
+        return colorPicker;
+    }
+
+
+    public ColorPicker addLeafColorPicker(Group root){
+        ColorPicker colorPicker = new ColorPicker(LEAF_COLOR);
+        colorPicker.setLayoutX(70);
+        colorPicker.setLayoutY(170);
+
+        Label label = new Label("Leaf: ");
+        label.setLayoutX(10);
+        label.setLayoutY(175);
+
+        root.getChildren().add(label);
+        root.getChildren().add(colorPicker);
+
+        return colorPicker;
+    }
+
+    public ColorPicker addLeafStrokeColorPicker(Group root){
+        ColorPicker colorPicker = new ColorPicker(LEAF_STROKE);
+        colorPicker.setLayoutX(70);
+        colorPicker.setLayoutY(210);
+
+        Label label = new Label("Leaf stroke: ");
+        label.setLayoutX(10);
+        label.setLayoutY(215);
 
         root.getChildren().add(label);
         root.getChildren().add(colorPicker);
@@ -80,7 +132,7 @@ public class ColorsPopup {
     public void addSaveButton(Group root){
         Button btn = new Button("Save");
         btn.setLayoutX(65);
-        btn.setLayoutY(150);
+        btn.setLayoutY(240);
         btn.setPrefHeight(30);
         btn.setPrefWidth(95);
 
@@ -88,7 +140,10 @@ public class ColorsPopup {
             FLOWER_COLOR = flower.getValue();
             STANDARD_COLOR = bark.getValue();
             LEAF_COLOR = leaf.getValue();
-
+            LEAF_STROKE = leafStroke.getValue();
+            FLOWER_STROKE = flowerStroke.getValue();
+            FLOWER_CENTER_FILL = flowerCenter.getValue();
+            
             popup.close();
         });
 

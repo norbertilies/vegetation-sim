@@ -10,7 +10,7 @@ import nilies.util.DrawingStage;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static nilies.util.Checker.isTLE;
+import static nilies.util.TLEChecker.isTLE;
 import static nilies.util.Constants.*;
 import static nilies.util.DrawingStage.randomColor;
 

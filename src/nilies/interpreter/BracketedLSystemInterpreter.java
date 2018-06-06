@@ -5,7 +5,7 @@ import nilies.exception.TLEException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static nilies.util.Checker.isTLE;
+import static nilies.util.TLEChecker.isTLE;
 
 public class BracketedLSystemInterpreter {
     public static Boolean timeLimitExceeded;

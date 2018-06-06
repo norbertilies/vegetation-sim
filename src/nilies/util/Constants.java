@@ -22,4 +22,7 @@ public class Constants {
     public static Boolean GARDEN_ONGOING = false;
     public static Double LEAF_LENGTH = 8.0;
     public static List<RuleSet> ruleSets = new ArrayList<>();
+    public static Color FLOWER_STROKE = Color.rgb(240,90,20);
+    public static Color FLOWER_CENTER_FILL = Color.YELLOW;
+    public static Color LEAF_STROKE = Color.DARKGREEN;
 }

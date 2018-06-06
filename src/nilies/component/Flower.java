@@ -9,6 +9,9 @@ import nilies.util.TranslateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static nilies.util.Constants.FLOWER_CENTER_FILL;
+import static nilies.util.Constants.FLOWER_STROKE;
+
 public class Flower {
     private Point point;
     private Integer numberOfPetalsPerHalf;
@@ -24,8 +27,7 @@ public class Flower {
 
 
         petalPair.forEach(p -> {
-//            Color color1 = randomColor();
-            p.setStroke(Color.rgb(240,90,20));
+            p.setStroke(FLOWER_STROKE);
             p.setFill(color);
             root.getChildren().add(p);
         });
@@ -34,7 +36,7 @@ public class Flower {
         circle.setCenterX(point.x);
         circle.setCenterY(point.y - petalLength/2);
         circle.setRadius(2.5);
-        circle.setFill(Color.YELLOW);
+        circle.setFill(FLOWER_CENTER_FILL);
 
         root.getChildren().add(circle);
 
