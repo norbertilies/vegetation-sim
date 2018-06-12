@@ -29,7 +29,7 @@ public class Menu {
         addButtons(root, mainStage);
     }
 
-    public void addButtons(Group root, Stage mainStage){
+    private void addButtons(Group root, Stage mainStage){
         root.getChildren().add(getLeftButton());
         root.getChildren().add(getRightButton());
         root.getChildren().add(getResetButton());
@@ -39,7 +39,7 @@ public class Menu {
         root.getChildren().add(getColorsButton(mainStage));
     }
 
-    public Button getLeftButton(){
+    private Button getLeftButton(){
         Button button = new Button("\uD83E\uDC70");
         button.setTooltip(new Tooltip("Hot-key: A"));
         button.setMinWidth(80);
@@ -58,7 +58,7 @@ public class Menu {
         return button;
     }
 
-    public Button getRightButton(){
+    private Button getRightButton(){
         Button button = new Button("\uD83E\uDC72");
         button.setTooltip(new Tooltip("Hot-key: D"));
         button.setMinWidth(80);
@@ -77,7 +77,7 @@ public class Menu {
         return button;
     }
 
-    public Button getResetButton(){
+    private Button getResetButton(){
         Button button = new Button("Reset");
         button.setTooltip(new Tooltip("Hot-key: X"));
         button.setMinWidth(110);
@@ -96,7 +96,7 @@ public class Menu {
         return button;
     }
 
-    public Button getUpButton(){
+    private Button getUpButton(){
         Button button = new Button("\uD83E\uDC71");
         button.setTooltip(new Tooltip("Hot-key: W"));
         button.setMinWidth(80);
@@ -115,7 +115,7 @@ public class Menu {
         return button;
     }
 
-    public Button getGenerateButton(){
+    private Button getGenerateButton(){
         Button button = new Button("Generate");
         button.setMinWidth(110);
         button.setMaxWidth(110);
@@ -133,7 +133,7 @@ public class Menu {
         return button;
     }
 
-    public Button getColorsButton(Stage mainStage) {
+    private Button getColorsButton(Stage mainStage) {
         Button button = new Button("Choose colors");
         button.setMinWidth(160);
         button.setMaxWidth(160);
@@ -147,7 +147,7 @@ public class Menu {
         return button;
     }
 
-    public Button getRulesButton(Stage mainStage) {
+    private Button getRulesButton(Stage mainStage) {
         Button button = new Button("Rules");
         button.setTooltip(new Tooltip("Hot-key: G"));
         button.setMinWidth(110);
@@ -156,8 +156,6 @@ public class Menu {
         button.setMaxHeight(45);
         button.setLayoutX(50);
         button.setLayoutY(925);
-
-
 
         button.setOnAction(event -> new RulesPopup(mainStage));
 

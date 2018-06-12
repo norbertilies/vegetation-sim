@@ -28,7 +28,7 @@ public class TranslateUtil {
         return new Point(newX, newY);
     }
 
-    public static boolean angleInBetween(double x, double y, double alpha) {
+    private static boolean angleInBetween(double x, double y, double alpha) {
         return (alpha >= x && alpha <= y);
     }
 }

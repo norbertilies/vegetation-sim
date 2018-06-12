@@ -25,7 +25,6 @@ public class Flower {
     public void draw(Group root, Color color) {
         List<Ellipse> petalPair = generateFlower();
 
-
         petalPair.forEach(p -> {
             p.setStroke(FLOWER_STROKE);
             p.setFill(color);
@@ -42,7 +41,7 @@ public class Flower {
 
     }
 
-    public List<Ellipse> generateFlower() {
+    private List<Ellipse> generateFlower() {
         List<Ellipse> petals = new ArrayList<>();
         Double angleOfPetal = (180.0/numberOfPetalsPerHalf);
 
@@ -60,9 +59,5 @@ public class Flower {
             petals.add(petal);
         }
         return petals;
-    }
-
-    private Double min(Double x, double y){
-        return x>y?y:x;
     }
 }

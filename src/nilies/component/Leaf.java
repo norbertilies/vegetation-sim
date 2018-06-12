@@ -33,17 +33,26 @@ public class Leaf {
         });
     }
 
-    public List<QuadCurve> generateLeaf() {
+    private List<QuadCurve> generateLeaf() {
         List<QuadCurve> quadCurves = new ArrayList<>();
 
         Point destination = TranslateUtil.moveTowardsAngle(start, angle, LEAF_LENGTH);
 
         QuadCurve a,b;
-        a = new QuadCurve(start.x, start.y, start.x+LEAF_LENGTH/2, start.y+LEAF_LENGTH/2, destination.x, destination.y);
-        b = new QuadCurve(start.x, start.y, start.x+LEAF_LENGTH/2, start.y-LEAF_LENGTH/2, destination.x, destination.y);
+        a = new QuadCurve(
+                start.x, start.y,
+                start.x+LEAF_LENGTH/2, start.y+LEAF_LENGTH/2,
+                destination.x, destination.y
+        );
+        b = new QuadCurve(
+                start.x, start.y,
+                start.x+LEAF_LENGTH/2, start.y-LEAF_LENGTH/2,
+                destination.x, destination.y
+        );
         quadCurves.add(a);
         quadCurves.add(b);
 
         return quadCurves;
     }
 }
+
